@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const prompt = body.prompt;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // GPT-4 Nano is called gpt-4o-mini
+      model: "gpt-4o-mini", 
       messages: [
         { role: "system", content: "You are a helpful assistant." },
         { role: "user", content: prompt },

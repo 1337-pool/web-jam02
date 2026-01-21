@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Calendar, LayoutGrid, MoreHorizontal } from "lucide-react"
 import ChatPane from "./ChatPane"
 import GhostIconButton from "./GhostIconButton"
-import { INITIAL_CONVERSATIONS,  INITIAL_FOLDERS } from "./mockData"
+import { INITIAL_CONVERSATIONS } from "./mockData"
 
 export default function AIAssistantUI() {
  
@@ -23,9 +23,7 @@ export default function AIAssistantUI() {
 
   const [conversations, setConversations] = useState(INITIAL_CONVERSATIONS)
   const [selectedId, setSelectedId] = useState(null)
-  const [folders, setFolders] = useState(INITIAL_FOLDERS)
 
-  const searchRef = useRef(null)
 
   const [isThinking, setIsThinking] = useState(false)
   const [thinkingConvId, setThinkingConvId] = useState(null)
@@ -40,6 +38,10 @@ export default function AIAssistantUI() {
 
 
 
+  
+
+
+
 
   function createNewChat() {
     const id = Math.random().toString(36).slice(2)
@@ -51,20 +53,15 @@ export default function AIAssistantUI() {
       preview: "Say hello to start...",
       pinned: false,
       folder: "Work Projects",
-      messages: [], // Ensure messages array is empty for new chats
+      messages: [],
     }
     setConversations((prev) => [item, ...prev])
     setSelectedId(id)
   }
 
-  function createFolder() {
-    const name = prompt("Folder name")
-    if (!name) return
-    if (folders.some((f) => f.name.toLowerCase() === name.toLowerCase())) return alert("Folder already exists.")
-    setFolders((prev) => [...prev, { id: Math.random().toString(36).slice(2), name }])
-  }
 
-  function sendMessage(convId, content) {
+
+ async function sendMessage(convId, content) {
     if (!content.trim()) return
     const now = new Date().toISOString()
     const userMsg = { id: Math.random().toString(36).slice(2), role: "user", content, createdAt: now }
@@ -87,18 +84,32 @@ export default function AIAssistantUI() {
     setThinkingConvId(convId)
 
     const currentConvId = convId
-    setTimeout(() => {
-      // Always clear thinking state and generate response for this specific conversation
-      setIsThinking(false)
-      setThinkingConvId(null)
-      setConversations((prev) =>
+
+
+    try {
+      const res = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: content }),
+      });
+    console.log(res)
+    const data = await res.json()
+
+    if (data.error) {
+      throw new Error(data.error)
+    }
+
+    // Add AI response
+    setConversations((prev) =>
         prev.map((c) => {
+
           if (c.id !== currentConvId) return c
-          const ack = `Got it — I'll help with that.`
           const asstMsg = {
             id: Math.random().toString(36).slice(2),
             role: "assistant",
-            content: ack,
+            content: data.result,
             createdAt: new Date().toISOString(),
           }
           const msgs = [...(c.messages || []), asstMsg]
@@ -110,8 +121,18 @@ export default function AIAssistantUI() {
             preview: asstMsg.content.slice(0, 80),
           }
         }),
-      )
-    }, 2000)
+    )
+    
+  } catch (error) {
+    console.error('Error calling API:', error)
+    
+
+
+  } finally {
+        setIsThinking(false)
+        
+  }
+
   }
 
   function resendMessage(convId, messageId) {
@@ -152,7 +173,11 @@ export default function AIAssistantUI() {
 
       <div className="mx-auto flex h-[calc(100vh-0px)]">
         
-
+          <div>
+            <h1>
+              
+            </h1>
+          </div>
         <main className="relative flex min-w-0 flex-1 flex-col">
           <ChatPane
             ref={composerRef}
