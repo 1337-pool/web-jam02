@@ -1,19 +1,27 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { prompt } = await req.json();
-    
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
-    return NextResponse.json({ text });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const body = await req.json();
+    const prompt = body.prompt;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini", // GPT-4 Nano is called gpt-4o-mini
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.7,
+    });
+   
+    return NextResponse.json({ result: response.choices[0].message.content });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
   }
 }
