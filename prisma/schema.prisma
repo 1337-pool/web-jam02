@@ -6,11 +6,11 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output = "./generated"
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
 }
 
 model DefenseSession {
@@ -24,6 +24,7 @@ model DefenseSession {
 model Message {
   id        String   @id @default(cuid())
   role      String
+  login      String
   content   String   @db.Text
   sessionId String
   session   DefenseSession @relation(fields: [sessionId], references: [id])
