@@ -1,6 +1,8 @@
+import { useSession } from "next-auth/react"
 import { cls } from "./utils"
-
+ 
 export default function Message({ role, children }) {
+   const { data: session } = useSession()
   const isUser = role === "user"
   return (
     <div className={cls("flex gap-3", isUser ? "justify-end" : "justify-start")}>
@@ -21,10 +23,7 @@ export default function Message({ role, children }) {
       </div>
       {isUser && (
         <div className="mt-0.5 grid h-7 w-7 place-items-center rounded-full bg-zinc-900 text-[10px] font-bold text-white dark:bg-white dark:text-zinc-900">
-          {/* 
-            ndirp avatar hnaya
-          */}
-          <img src="" alt="" />
+          <img src={session.user.image} className="rounded-full" alt="" />
 
         </div>
       )}

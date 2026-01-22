@@ -19,7 +19,8 @@ export default function Home() {
   
   return (
     <>
-      <HeroSection /> 
+      <button onClick={() => signIn("42-school")}>Sign in with 42</button>
+      {/* <AIAssistantUI />  */}
     </>
   )
         

@@ -4,6 +4,7 @@ import { useState, forwardRef, useImperativeHandle, useRef } from "react"
 import { Pause} from "lucide-react"
 import Message from "./Message"
 import Composer from "./Composer"
+import Quiz, { QuizData } from "./Quiz"
 import { cls, timeAgo } from "./utils"
 
 function ThinkingMessage({ onPause }) {
@@ -67,15 +68,47 @@ const ChatPane = forwardRef(function ChatPane(
           </div>
         ) : (
           <>
-            {messages.map((m) => (
-              <div key={m.id} className="space-y-2">
-                 
-                  <Message role={m.role}>
-                    <div className="whitespace-pre-wrap">{m.content}</div>
-                  </Message>
-                
-              </div>
-            ))}
+            {messages.map((m) => {
+              // Try to parse quiz JSON from assistant messages
+              let quizData = null
+              if (m.role === "assistant") {
+                try {
+                  // Try to extract JSON from the content
+                  const jsonMatch = m.content.match(/\{[\s\S]*\}/)
+                  if (jsonMatch) {
+                    const parsed = JSON.parse(jsonMatch[0])
+                    // Validate quiz structure
+                    if (parsed.title && Array.isArray(parsed.questions) && parsed.questions.length > 0) {
+                      const isValid = parsed.questions.every((q) => 
+                        q.question && 
+                        Array.isArray(q.options) && 
+                        q.options.length === 4 && 
+                        (q.correctAnswer !== undefined)
+                      )
+                      if (isValid) {
+                        quizData = parsed
+                      }
+                    }
+                  }
+                } catch (e) {
+                  // Not valid JSON or not a quiz, continue with normal rendering
+                }
+              }
+
+              return (
+                <div key={m.id} className="space-y-2">
+                  {quizData ? (
+                    <Message role={m.role}>
+                      <Quiz quizData={quizData} />
+                    </Message>
+                  ) : (
+                    <Message role={m.role}>
+                      <div className="whitespace-pre-wrap">{m.content}</div>
+                    </Message>
+                  )}
+                </div>
+              )
+            })}
             {isThinking && <ThinkingMessage onPause={onPauseThinking} />}
           </>
         )}
