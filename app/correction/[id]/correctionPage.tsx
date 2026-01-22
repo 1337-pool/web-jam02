@@ -25,7 +25,7 @@ interface ApiMessage {
 }
 
 export default function CorrectionPage({id} : any) {
-  // console.log(id)
+  
   const { data: session } = useSession();
   const [code, setCode] = useState(`def fibonacci(n):
     if n <= 1:
@@ -68,12 +68,12 @@ print(fibonacci(10))`);
       const data = await response.json();
       console.log(data);
 
-      // Set the code from the saved session
+      
       if (data.codeSnippet) {
         setCode(data.codeSnippet);
       }
 
-      // Parse the questions string into an array
+      
       let questions;
       if (typeof data.questions === 'string') {
         questions = JSON.parse(data.questions);
@@ -81,13 +81,13 @@ print(fibonacci(10))`);
         questions = data.questions;
       }
 
-      // Build the quiz data object
+      
       const quizDataObj: QuizData = {
         title: data.title || "Code Correction Quiz",
         questions: questions
       };
 
-      // Validate quiz structure
+      
       if (
         !quizDataObj.title ||
         !Array.isArray(quizDataObj.questions) ||
@@ -133,7 +133,7 @@ print(fibonacci(10))`);
   }, [messages]);
 
   const startCorrection = async () => {
-    // toast.error("Event has been created.")
+    
     if (!code.trim()) {
       alert("Please provide some Python code to correct");
       return;
@@ -157,7 +157,7 @@ print(fibonacci(10))`);
          toast.error("in line " + err.run.output.toString().split("line")[1])
           return  
         }
-        // Generate quiz based on the code
+        
       setIsStarting(true);
       const quizPrompt = `Based on this Python code, create a quiz with 4 questions to test understanding. The quiz should cover key concepts, logic, and functionality of the code. Return ONLY a JSON object with this format:
 {
@@ -189,12 +189,12 @@ ${code}`;
 
       const data = await response.json();
       
-      // Try to parse quiz JSON from response
+      
       try {
         const jsonMatch = data.result.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[0]);
-          // Validate quiz structure
+          
           if (parsed.title && Array.isArray(parsed.questions) && parsed.questions.length > 0) {
             const isValid = parsed.questions.every((q: any) => 
               q.question && 
@@ -283,7 +283,7 @@ ${code}`;
   const finishCorrection = () => {
     if (!sessionId || !quizData) return;
     
-    // Check if all questions are answered
+    
     const allAnswered = Object.keys(userQuizAnswers).length === quizData.questions.length;
     if (!allAnswered) {
       alert("Please answer all questions before finishing the correction.");
@@ -307,7 +307,7 @@ ${code}`;
 
   return (
     <div className="h-screen flex flex-col bg-zinc-950 text-zinc-100 dark">
-      {/* Header */}
+      
       <div className="border-b border-zinc-800 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between flex-shrink-0">
         <div>
           <h1 className="text-xl md:text-2xl font-bold">Code Correction</h1>
@@ -361,9 +361,9 @@ ${code}`;
         </div>
       </div>
 
-      {/* Main Content */}
+      
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
-        {/* Code Editor */}
+        
         <div className="h-[40vh] md:h-full w-full md:w-1/2 border-b md:border-b-0 md:border-r border-zinc-800 flex-shrink-0 md:flex-shrink">
           <CodeEditor
             code={code}
@@ -372,9 +372,9 @@ ${code}`;
           />
         </div>
 
-        {/* Chat Panel */}
+        
         <div className="flex-1 md:w-1/2 flex flex-col min-h-0 overflow-hidden">
-          {/* Messages */}
+          
           <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
             {quizData ? (
               <div className="space-y-4">

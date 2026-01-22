@@ -2,7 +2,7 @@
 
 import { motion, Variants } from "framer-motion"
 
-// Using Variants type to allow dynamic functional resolvers (i: number)
+
 const pathVariants: Variants = {
   hidden: { 
     pathLength: 0,
@@ -60,7 +60,7 @@ function RepeatingSVG() {
       initial="hidden"
       animate="visible"
     >
-      {/* 1 */}
+      
       <motion.path
         d="M2.8333 17.6623H5.92418V2.33766H2.31816V5.45455H0V1.49012e-07H8.75748V17.6623H11.8484V20H2.8333V17.6623Z"
         stroke="white"
@@ -76,7 +76,7 @@ function RepeatingSVG() {
         variants={fillVariants}
       />
 
-      {/* 3 (first) */}
+      
       <motion.path
         d="M21.3785 17.6623H30.6512V10.9091H22.1513V8.57143H30.6512V2.33766H21.3785V0H33.4845V20H21.3785V17.6623Z"
         stroke="white"
@@ -92,7 +92,7 @@ function RepeatingSVG() {
         variants={fillVariants}
       />
 
-      {/* 3 (second) */}
+      
       <motion.path
         d="M42.2419 17.6623H51.5146V10.9091H43.0147V8.57143H51.5146V2.33766H42.2419V0H54.3479V20H42.2419V17.6623Z"
         stroke="white"
@@ -108,7 +108,7 @@ function RepeatingSVG() {
         variants={fillVariants}
       />
 
-      {/* 7 */}
+      
       <motion.path
         d="M72.6355 2.33766H64.9084V7.27273H62.5902V0H75.2113V20H72.6355V2.33766Z"
         stroke="white"
@@ -130,7 +130,7 @@ function RepeatingSVG() {
 export default function LoadingPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center relative overflow-hidden">
-      {/* Background glow animation */}
+      
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
           className="w-[400px] h-[400px] rounded-full bg-white/5 blur-3xl"
@@ -146,7 +146,7 @@ export default function LoadingPage() {
         />
       </div>
 
-      {/* Floating logo container */}
+      
       <motion.div
         className="relative z-10"
         animate={{ y: [0, -15, 0] }}
@@ -181,7 +181,7 @@ export default function LoadingPage() {
         </motion.div>
       </motion.div>
 
-      {/* Loading text at bottom */}
+      
       <motion.div 
         className="absolute bottom-20 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}

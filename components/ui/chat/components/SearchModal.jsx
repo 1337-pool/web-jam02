@@ -94,7 +94,7 @@ export default function SearchModal({
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             className="fixed left-1/2 top-[20%] z-50 w-full max-w-2xl -translate-x-1/2 rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
           >
-            {/* Search Header */}
+            
             <div className="flex items-center gap-3 border-b border-zinc-200 p-4 dark:border-zinc-800">
               <SearchIcon className="h-5 w-5 text-zinc-400" />
               <input
@@ -110,9 +110,9 @@ export default function SearchModal({
               </button>
             </div>
 
-            {/* Search Results */}
+            
             <div className="max-h-[60vh] overflow-y-auto">
-              {/* New Chat Option */}
+              
               <div className="border-b border-zinc-200 p-2 dark:border-zinc-800">
                 <button
                   onClick={handleNewChat}
@@ -123,7 +123,7 @@ export default function SearchModal({
                 </button>
               </div>
 
-              {/* Conversation Groups */}
+              
               {Object.entries(groupedConversations).map(([groupName, convs]) => {
                 if (convs.length === 0) return null
 
@@ -149,7 +149,7 @@ export default function SearchModal({
                 )
               })}
 
-              {/* Empty State */}
+              
               {filteredConversations.length === 0 && query.trim() && (
                 <div className="p-8 text-center">
                   <SearchIcon className="mx-auto h-12 w-12 text-zinc-300 dark:text-zinc-600" />
@@ -160,7 +160,7 @@ export default function SearchModal({
                 </div>
               )}
 
-              {/* Default State - Show all conversations when no query */}
+              
               {!query.trim() && conversations.length === 0 && (
                 <div className="p-8 text-center">
                   <div className="text-lg font-medium text-zinc-900 dark:text-zinc-100">No conversations yet</div>

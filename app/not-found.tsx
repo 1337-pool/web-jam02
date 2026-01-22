@@ -58,25 +58,25 @@ function AnimatedNotFound() {
       initial="hidden"
       animate="visible"
     >
-      {/* N */}
-      <motion.path
-        d="M0 40V10H5V32L18 10H23V40H18V18L5 40H0Z"
-        stroke="white"
-        strokeWidth="0.8"
-        fill="transparent"
-        custom={0}
-        variants={pathVariants}
-      />
-      <motion.path
-        d="M0 40V10H5V32L18 10H23V40H18V18L5 40H0Z"
-        fill="white"
-        custom={0}
-        variants={fillVariants}
-      />
-
-      {/* ... Rest of your SVG paths remain exactly the same ... */}
       
-      {/* O */}
+      <motion.path
+        d="M0 40V10H5V32L18 10H23V40H18V18L5 40H0Z"
+        stroke="white"
+        strokeWidth="0.8"
+        fill="transparent"
+        custom={0}
+        variants={pathVariants}
+      />
+      <motion.path
+        d="M0 40V10H5V32L18 10H23V40H18V18L5 40H0Z"
+        fill="white"
+        custom={0}
+        variants={fillVariants}
+      />
+
+      
+      
+      
       <motion.path
         d="M30 10H50V40H30V10ZM35 15V35H45V15H35Z"
         stroke="white"
@@ -92,7 +92,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* T */}
+      
       <motion.path
         d="M55 10H80V15H70V40H65V15H55V10Z"
         stroke="white"
@@ -108,7 +108,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* F */}
+      
       <motion.path
         d="M105 10H130V15H110V22H125V27H110V40H105V10Z"
         stroke="white"
@@ -124,7 +124,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* O */}
+      
       <motion.path
         d="M135 10H155V40H135V10ZM140 15V35H150V15H140Z"
         stroke="white"
@@ -140,7 +140,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* U */}
+      
       <motion.path
         d="M160 10H165V35H180V10H185V40H160V10Z"
         stroke="white"
@@ -156,7 +156,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* N */}
+      
       <motion.path
         d="M190 40V10H195V32L208 10H213V40H208V18L195 40H190Z"
         stroke="white"
@@ -172,7 +172,7 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
-      {/* D */}
+      
       <motion.path
         d="M218 10H238C245 10 250 15 250 25C250 35 245 40 238 40H218V10ZM223 15V35H237C241 35 245 32 245 25C245 18 241 15 237 15H223Z"
         stroke="white"

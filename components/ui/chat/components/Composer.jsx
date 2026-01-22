@@ -76,7 +76,7 @@ const Composer = forwardRef(function Composer({ onSend, busy }, ref) {
           "max-w-3xl border-zinc-200 dark:border-zinc-800",
         )}
       >
-        {/* Textarea area - grows upward */}
+        
         <div className="flex-1 px-4 pt-4 pb-2">
           <textarea
             ref={inputRef}

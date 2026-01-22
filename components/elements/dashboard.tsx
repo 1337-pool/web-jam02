@@ -30,9 +30,9 @@ export default function SidebarCustom({children}: any) {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  {/* <BreadcrumbLink href="#"> */}
+                  
                     Test your knowledge, Prove Your Skills
-                  {/* </BreadcrumbLink> */}
+                  
                 </BreadcrumbItem>
                 {/* <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
