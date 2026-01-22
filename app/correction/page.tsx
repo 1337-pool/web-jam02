@@ -6,8 +6,9 @@ import CodeEditor from "@/components/elements/editor";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Play, Loader2 } from "lucide-react";
+import { Send, Play, Loader2, CheckCircle2 } from "lucide-react";
 import MessageComponent from "@/components/ui/chat/components/Message.jsx";
+import Quiz, { QuizData } from "@/components/ui/chat/components/Quiz";
 
 interface MessageType {
   id: string;
@@ -35,6 +36,10 @@ print(fibonacci(10))`);
   const [isLoading, setIsLoading] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [isFinishing, setIsFinishing] = useState(false);
+  const [quizData, setQuizData] = useState<QuizData | null>(null);
+  const [isFinished, setIsFinished] = useState(false);
+  const [userQuizAnswers, setUserQuizAnswers] = useState<Record<number, number>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -53,13 +58,27 @@ print(fibonacci(10))`);
 
     setIsStarting(true);
     try {
-      const initialPrompt = `Analyze this code and start the peer evaluation:\n\n${code}`;
-      
+      // Generate quiz based on the code
+      const quizPrompt = `Based on this Python code, create a quiz with 4 questions to test understanding. The quiz should cover key concepts, logic, and functionality of the code. Return ONLY a JSON object with this format:
+{
+  "title": "Quiz Title",
+  "questions": [
+    {
+      "question": "Question text?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswer": "Option A"
+    }
+  ]
+}
+
+Code:
+${code}`;
+
       const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          prompt: initialPrompt,
+          prompt: quizPrompt,
           messages: []
         }),
       });
@@ -70,16 +89,37 @@ print(fibonacci(10))`);
 
       const data = await response.json();
       
-      const initialMessage: MessageType = {
-        id: Date.now().toString(),
-        role: "assistant",
-        content: data.result,
-        createdAt: new Date(),
-      };
-
-      setSessionId(Date.now().toString());
-      setMessages([initialMessage]);
-      setConversationHistory(data.messages || []);
+      // Try to parse quiz JSON from response
+      try {
+        const jsonMatch = data.result.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          // Validate quiz structure
+          if (parsed.title && Array.isArray(parsed.questions) && parsed.questions.length > 0) {
+            const isValid = parsed.questions.every((q: any) => 
+              q.question && 
+              Array.isArray(q.options) && 
+              q.options.length === 4 && 
+              (q.correctAnswer !== undefined)
+            );
+            if (isValid) {
+              setQuizData(parsed as QuizData);
+              setSessionId(Date.now().toString());
+              setUserQuizAnswers({});
+              setIsFinished(false);
+            } else {
+              throw new Error("Invalid quiz format");
+            }
+          } else {
+            throw new Error("Invalid quiz structure");
+          }
+        } else {
+          throw new Error("No JSON found in response");
+        }
+      } catch (parseError) {
+        console.error("Error parsing quiz:", parseError);
+        alert("Failed to parse quiz. The AI response may not be in the correct format.");
+      }
     } catch (error) {
       console.error("Error starting correction:", error);
       alert("Failed to start correction. Please try again.");
@@ -135,6 +175,19 @@ print(fibonacci(10))`);
     }
   };
 
+  const finishCorrection = () => {
+    if (!sessionId || !quizData) return;
+    
+    // Check if all questions are answered
+    const allAnswered = Object.keys(userQuizAnswers).length === quizData.questions.length;
+    if (!allAnswered) {
+      alert("Please answer all questions before finishing the correction.");
+      return;
+    }
+    
+    setIsFinished(true);
+  };
+
   if (!session) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -158,25 +211,46 @@ print(fibonacci(10))`);
             {sessionId ? "Session active" : "Ready to start"}
           </p>
         </div>
-        {!sessionId && (
-          <Button
-            onClick={startCorrection}
-            disabled={isStarting}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            {isStarting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Starting...
-              </>
-            ) : (
-              <>
-                <Play className="mr-2 h-4 w-4" />
-                Start Correction
-              </>
-            )}
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {!sessionId && (
+            <Button
+              onClick={startCorrection}
+              disabled={isStarting}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              {isStarting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Starting...
+                </>
+              ) : (
+                <>
+                  <Play className="mr-2 h-4 w-4" />
+                  Start Correction
+                </>
+              )}
+            </Button>
+          )}
+          {sessionId && !isFinished && quizData && (
+            <Button
+              onClick={finishCorrection}
+              disabled={isFinishing || Object.keys(userQuizAnswers).length !== quizData.questions.length}
+              className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isFinishing ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="mr-2 h-4 w-4" />
+                  Finish Correction
+                </>
+              )}
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Main Content */}
@@ -194,7 +268,28 @@ print(fibonacci(10))`);
         <div className="w-1/2 flex flex-col">
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            {messages.length === 0 ? (
+            {quizData ? (
+              <div className="space-y-4">
+                {isFinished && (
+                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                    <h2 className="text-xl font-semibold mb-2 text-green-400">
+                      Correction Complete!
+                    </h2>
+                    <p className="text-sm text-zinc-400 mb-4">
+                      Review the quiz below to see the correct answers and your score.
+                    </p>
+                  </div>
+                )}
+                <MessageComponent role="assistant">
+                  <Quiz 
+                    quizData={quizData} 
+                    showAnswersImmediately={isFinished}
+                    userAnswers={isFinished ? userQuizAnswers : userQuizAnswers}
+                    onAnswerChange={!isFinished ? (answers) => setUserQuizAnswers(answers) : undefined}
+                  />
+                </MessageComponent>
+              </div>
+            ) : messages.length === 0 ? (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center text-zinc-500">
                   <p className="text-lg mb-2">No messages yet</p>
@@ -230,7 +325,7 @@ print(fibonacci(10))`);
           </div>
 
           {/* Input */}
-          {sessionId && (
+          {sessionId && !isFinished && (
             <div className="border-t border-zinc-800 p-4">
               <div className="flex gap-2">
                 <Textarea
