@@ -27,6 +27,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 
 
@@ -51,9 +52,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }
       get_correction()
     }, [session])
-  // const router = useRouter()
+  const router = useRouter()
   const handleRefrech = () => {
-    window.location.reload();
+    router.push("new")
   }
   const data = {
     teams: [

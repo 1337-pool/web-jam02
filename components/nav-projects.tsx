@@ -44,12 +44,7 @@ export function NavProjects({
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Conversations History</SidebarGroupLabel>
-        {/* <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70" onClick={handleCorrection}>
-            <Plus className="text-sidebar-foreground/70" />
-            <span>New Correction</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem> */}
+
       <SidebarMenu>
         {conversations.map((item) => (
           <SidebarMenuItem key={item.id}>

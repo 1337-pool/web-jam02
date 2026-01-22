@@ -11,6 +11,7 @@ import MessageComponent from "@/components/ui/chat/components/Message.jsx";
 import Quiz, { QuizData } from "@/components/ui/chat/components/Quiz";
 import { Courgette as Cossette_Texte } from "next/font/google";
 import { toast } from "sonner";
+import { createCorrection, updateCorrection } from "@/app/actions/postCorrection";
 
 interface MessageType {
   id: string;
@@ -44,7 +45,7 @@ print(fibonacci(10))`);
   const [isFinished, setIsFinished] = useState(false);
   const [userQuizAnswers, setUserQuizAnswers] = useState<Record<number, number>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [score, setScore] = useState(null);
+  const [score, setScore] = useState(0);
   
   useEffect(() => {
   if (id === "new" || !session?.user) return;
@@ -280,7 +281,7 @@ ${code}`;
 
 
 
-  const finishCorrection = () => {
+  const finishCorrection = async () => {
     if (!sessionId || !quizData) return;
     
     
@@ -290,6 +291,20 @@ ${code}`;
       return;
     }
     setIsFinished(true);
+    if (id == "new")
+    {
+      toast.promise(createCorrection({score, title: quizData.title, questions: quizData.questions, login: session?.user.login, codeSnippet: code}), {
+        loading: "saving score...",
+        success: "saved seccussfully",
+        error: (err: any) => `${err.message}`,
+      });
+    } else {
+      toast.promise(updateCorrection({id, score}), {
+        loading: "updating score...",
+        success: "updated seccussfully",
+        error: (err: any) => `${err.message}`,
+      });
+    }
   };
 
   if (!session) {
@@ -390,7 +405,7 @@ ${code}`;
                 )}
                 <MessageComponent role="assistant">
                   <Quiz
-                    
+                    setScore={setScore}
                     quizData={quizData} 
                     showAnswersImmediately={isFinished}
                     userAnswers={isFinished ? userQuizAnswers : userQuizAnswers}

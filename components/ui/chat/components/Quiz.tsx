@@ -15,13 +15,15 @@ export interface QuizData {
 }
 
 interface QuizProps {
+  setScore: CallableFunction
   quizData: QuizData
   showAnswersImmediately?: boolean
   userAnswers?: Record<number, number>
   onAnswerChange?: (answers: Record<number, number>) => void
 }
 
-export default function Quiz({ 
+export default function Quiz({
+  setScore,
   quizData, 
   showAnswersImmediately = false,
   userAnswers,
@@ -83,6 +85,8 @@ export default function Quiz({
         correct++
       }
     })
+    if (correct && quizData.questions)
+      setScore(Math.round((correct / quizData.questions.length) * 100))
     return { correct, total: quizData.questions.length }
   }
 
