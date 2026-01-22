@@ -136,7 +136,7 @@ print(fibonacci(10))`);
   const startCorrection = async () => {
     
     if (!code.trim()) {
-      alert("Please provide some Python code to correct");
+      toast.warning("Please provide some Python code to correct");
       return;
     }
     
@@ -219,7 +219,7 @@ ${code}`;
         }
       } catch (parseError) {
         console.error("Error parsing quiz:", parseError);
-        alert("Failed to parse quiz. The AI response may not be in the correct format.");
+        toast.error("Failed to parse quiz. The AI response may not be in the correct format.");
       }
     } catch (error) {
       console.error("Error starting correction:", error);
@@ -271,7 +271,7 @@ ${code}`;
       setConversationHistory(data.messages || []);
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send message. Please try again.");
+      toast.error("Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -287,7 +287,7 @@ ${code}`;
     
     const allAnswered = Object.keys(userQuizAnswers).length === quizData.questions.length;
     if (!allAnswered) {
-      alert("Please answer all questions before finishing the correction.");
+      toast.warning("Please answer all questions before finishing the correction.");
       return;
     }
     setIsFinished(true);
