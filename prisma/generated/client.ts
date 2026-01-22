@@ -44,8 +44,3 @@ export { Prisma }
  * 
  */
 export type DefenseSession = Prisma.DefenseSessionModel
-/**
- * Model Message
- * 
- */
-export type Message = Prisma.MessageModel

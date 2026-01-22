@@ -9,5 +9,4 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/DefenseSession'
-export type * from './models/Message'
 export type * from './commonInputTypes'
