@@ -31,6 +31,26 @@ import { useSession } from "next-auth/react"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const {data: session} = useSession()
+    const [corr, setCorr] = React.useState([])
+    React.useEffect( () => {
+      const get_correction = async () => {
+        const response = await fetch(`/api/session?login=${(session?.user as any)?.login}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+  
+        if (!response.ok) {
+          // throw new Error("Failed to start correction");
+          console.error("errrrrrrrrorororororororor")
+        }
+  
+        const data = await response.json();
+        console.log(data)
+        setCorr(data)
+      }
+      get_correction()
+    }, [session])
   // const router = useRouter()
   const handleRefrech = () => {
     window.location.reload();
@@ -52,25 +72,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
       },
     ],
-    conversations: [
-      {
-        title: "Design Engineering",
-        id: 1,
-        score: 50,
-      },
-      {
-        title: "Sales & Marketing",
-        id: 2,
-        score: 25,
-      },
-      {
-        title: "Travel",
-        id: 3,
-        score: 100,
-      },
-    ],
+    conversations: corr,
   }
-  const {data: session} = useSession()
   const user = session?.user || {name: "", email: "", image: ""}
   return (
     <Sidebar collapsible="icon" {...props}>

@@ -2,10 +2,16 @@ import SidebarCustom from '@/components/elements/dashboard'
 import React from 'react'
 import CorrectionPage from './correctionPage'
 
-export default function page() {
+export default async function page({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+
   return (
     <SidebarCustom>
-      <CorrectionPage />
+      <CorrectionPage id={id ?? "new"} />
     </SidebarCustom>
   )
 }
