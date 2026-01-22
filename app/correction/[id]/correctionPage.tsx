@@ -154,7 +154,7 @@ print(fibonacci(10))`);
       const err = await error.json()
       if(err.run.output.toString().split("line")[1])
         {
-          alert("in line " + err.run.output.toString().split("line")[1])
+         toast.error("in line " + err.run.output.toString().split("line")[1])
           return  
         }
         // Generate quiz based on the code
