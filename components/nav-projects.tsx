@@ -54,7 +54,7 @@ export function NavProjects({
         {conversations.map((item) => (
           <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild>
-              <Link href={`correction/${item.id}`}>
+              <Link href={`${item.id}`}>
                 {/* <item.icon /> */}
                 <span>{item.title}</span>
               </Link>

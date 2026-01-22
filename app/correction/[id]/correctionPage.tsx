@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send, Play, Loader2, CheckCircle2 } from "lucide-react";
 import MessageComponent from "@/components/ui/chat/components/Message.jsx";
 import Quiz, { QuizData } from "@/components/ui/chat/components/Quiz";
+import { toast } from "sonner";
 
 interface MessageType {
   id: string;
@@ -22,7 +23,8 @@ interface ApiMessage {
   content: string;
 }
 
-export default function CorrectionPage() {
+export default function CorrectionPage({id} : any) {
+  // console.log(id)
   const { data: session } = useSession();
   const [code, setCode] = useState(`def fibonacci(n):
     if n <= 1:
@@ -41,6 +43,83 @@ print(fibonacci(10))`);
   const [isFinished, setIsFinished] = useState(false);
   const [userQuizAnswers, setUserQuizAnswers] = useState<Record<number, number>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+  if (id === "new" || !session?.user) return;
+
+  const getData = async () => {
+    setIsStarting(true);
+
+    try {
+      const response = await fetch(
+        `/api/session?login=${(session.user as any).login}&id=${id}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load correction session");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Set the code from the saved session
+      if (data.codeSnippet) {
+        setCode(data.codeSnippet);
+      }
+
+      // Parse the questions string into an array
+      let questions;
+      if (typeof data.questions === 'string') {
+        questions = JSON.parse(data.questions);
+      } else {
+        questions = data.questions;
+      }
+
+      // Build the quiz data object
+      const quizDataObj: QuizData = {
+        title: data.title || "Code Correction Quiz",
+        questions: questions
+      };
+
+      // Validate quiz structure
+      if (
+        !quizDataObj.title ||
+        !Array.isArray(quizDataObj.questions) ||
+        quizDataObj.questions.length === 0
+      ) {
+        throw new Error("Invalid quiz structure");
+      }
+
+      const isValid = quizDataObj.questions.every((q: any) =>
+        q.question &&
+        Array.isArray(q.options) &&
+        q.options.length === 4 &&
+        q.correctAnswer !== undefined
+      );
+
+      if (!isValid) {
+        throw new Error("Invalid quiz format");
+      }
+
+      setQuizData(quizDataObj);
+      setSessionId(data.id || Date.now().toString());
+      setUserQuizAnswers({});
+      setIsFinished(false);
+    } catch (error) {
+      console.error("Error loading correction session:", error);
+      toast.error("Failed to load correction session. Please try again.");
+    } finally {
+      setIsStarting(false);
+    }
+  };
+
+  getData();
+}, [id, session]);
+
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,6 +130,7 @@ print(fibonacci(10))`);
   }, [messages]);
 
   const startCorrection = async () => {
+    // toast.error("Event has been created.")
     if (!code.trim()) {
       alert("Please provide some Python code to correct");
       return;
@@ -122,7 +202,7 @@ ${code}`;
       }
     } catch (error) {
       console.error("Error starting correction:", error);
-      alert("Failed to start correction. Please try again.");
+      toast.error("Failed to start correction. Please try again.")
     } finally {
       setIsStarting(false);
     }
