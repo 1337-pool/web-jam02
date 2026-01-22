@@ -10,10 +10,10 @@ import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Products", href: "/products" },
-  { name: "About Us", href: "/about" },
-  { name: "Contacts", href: "/contacts" },
+  { name: "Home", href: "/test" },
+  { name: "Correction", href: "/correction" },
+  // { name: "About Us", href: "/about" },
+  // { name: "Contacts", href: "/contacts" },
 ]
 
 function AnimatedLogo1337({ className = "", isAnimating = false }: { className?: string; isAnimating?: boolean }) {
@@ -204,18 +204,13 @@ export function Navbar() {
                 session?.user ?
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost">
-                                <div className="flex items-center align-middle gap-2">
-                                    <code>{session?.user.name}</code>
-                                    <Avatar>
-                                        <AvatarImage src={session?.user.image || ""} alt="@shadcn" />
-                                        <AvatarFallback>
-                                            {nameToInitials(session?.user.name || "t t")}
-                                        </AvatarFallback>
-                                        <AvatarBadge className="bg-green-600 dark:bg-green-800" />
-                                    </Avatar>
-                                </div>
-                            </Button>
+                          <Avatar>
+                              <AvatarImage src={session?.user.image || ""} alt="@shadcn" />
+                              <AvatarFallback>
+                                  {nameToInitials(session?.user.name || "t t")}
+                              </AvatarFallback>
+                              <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+                          </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                                 <DropdownMenuItem onClick={handleLogout}>

@@ -1,30 +1,3 @@
-// import { NextRequest, NextResponse } from 'next/server';
-// import OpenAI from 'openai';
-
-// const openai = new OpenAI({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// export async function POST(req: NextRequest) {
-//   try {
-//     const body = await req.json();
-//     const prompt = body.prompt;
-
-//     const response = await openai.chat.completions.create({
-//       model: "gpt-4o-mini", 
-//       messages: [
-//         { role: "system", content: "You are a helpful assistant." },
-//         { role: "user", content: prompt },
-//       ],
-//       temperature: 0.7,
-//     });
-   
-//     return NextResponse.json({ result: response.choices[0].message.content });
-//   } catch (err) {
-//     console.error(err);
-//     return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
-//   }
-// }
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -66,33 +39,45 @@ You are an educational assistant that creates quizzes. When the user requests a 
   ]
 }
 
-IMPORTANT RULES:
-- Always return exactly 4 questions
+IMPORTANT RULES FOR QUESTION COUNT:
+- Simple code (1-10 lines, basic operations): 2-3 questions
+- Moderate code (11-30 lines, functions, conditionals): 4-6 questions
+- Complex code (31-60 lines, classes, multiple functions): 7-10 questions
+- Adjust based on unique concepts present (loops, recursion, data structures, etc.)
+
+OTHER RULES:
 - Each question must have exactly 4 options
-- The correctAnswer can be either the exact text of the correct option OR the index (0-3)
+- The correctAnswer must be the exact text of the correct option
 - The title should be descriptive of the quiz topic
 - Return ONLY the JSON, no additional text before or after
 - Make sure the JSON is valid and properly formatted
+- Questions should cover different aspects: syntax, logic, output, purpose, edge cases
 `;
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { prompt, messages = [] } = body;
-
-    // Check if user is requesting a quiz
     const isQuizRequest = /quiz|questions|test|exam|assessment|create.*questions/i.test(prompt);
-    
-    // Use quiz system prompt if quiz is requested
     const activeSystemPrompt = isQuizRequest ? quizSystemPrompt : systemPrompt;
     
-    // Enhance user prompt for quiz requests
     let enhancedPrompt = prompt;
     if (isQuizRequest) {
-      enhancedPrompt = `${prompt}\n\nPlease respond with a JSON object containing exactly 4 questions, each with 4 options. Include a title for the quiz. Format: {"title": "...", "questions": [{"question": "...", "options": ["...", "...", "...", "..."], "correctAnswer": "..."}]}`;
-    }
+      enhancedPrompt = `${prompt}\n\nAnalyze the code complexity and respond with a JSON object containing an appropriate number of questions based on the following guidelines:
 
-    // Build conversation history with system prompt
+      QUESTION COUNT BY COMPLEXITY:
+      - Simple code (1-10 lines, basic operations): 2-3 questions
+      - Moderate code (11-30 lines, functions, conditionals): 4-6 questions
+      - Complex code (31-60 lines, classes, multiple functions): 7-10 questions
+      - Advanced code (60+ lines, complex logic, OOP, algorithms): 10-15 questions
+
+      Each question must have exactly 4 options. Include a descriptive title for the quiz.
+
+      Format: {"title": "...", "questions": [{"question": "...", "options": ["...", "...", "...", "..."], "correctAnswer": "..."}]}
+
+      Ensure questions cover various aspects: syntax, logic, output prediction, purpose, and edge cases.`;
+}
+
     const conversationMessages = [
       { role: "system", content: activeSystemPrompt },
       ...messages,
@@ -105,10 +90,8 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
       ...(isQuizRequest && { response_format: { type: "json_object" } }),
     });
-   
     return NextResponse.json({ 
       result: response.choices[0].message.content,
-      // Return updated messages array so client can maintain history
       messages: [
         ...messages,
         { role: "user", content: prompt },
