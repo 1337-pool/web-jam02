@@ -27,17 +27,15 @@ export type AggregateDefenseSession = {
 }
 
 export type DefenseSessionAvgAggregateOutputType = {
-  id: number | null
   score: number | null
 }
 
 export type DefenseSessionSumAggregateOutputType = {
-  id: number | null
   score: number | null
 }
 
 export type DefenseSessionMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   title: string | null
   codeSnippet: string | null
   score: number | null
@@ -48,7 +46,7 @@ export type DefenseSessionMinAggregateOutputType = {
 }
 
 export type DefenseSessionMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   title: string | null
   codeSnippet: string | null
   score: number | null
@@ -72,12 +70,10 @@ export type DefenseSessionCountAggregateOutputType = {
 
 
 export type DefenseSessionAvgAggregateInputType = {
-  id?: true
   score?: true
 }
 
 export type DefenseSessionSumAggregateInputType = {
-  id?: true
   score?: true
 }
 
@@ -202,7 +198,7 @@ export type DefenseSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type DefenseSessionGroupByOutputType = {
-  id: number
+  id: string
   title: string
   codeSnippet: string
   score: number | null
@@ -236,7 +232,7 @@ export type DefenseSessionWhereInput = {
   AND?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
   OR?: Prisma.DefenseSessionWhereInput[]
   NOT?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
-  id?: Prisma.IntFilter<"DefenseSession"> | number
+  id?: Prisma.StringFilter<"DefenseSession"> | string
   title?: Prisma.StringFilter<"DefenseSession"> | string
   codeSnippet?: Prisma.StringFilter<"DefenseSession"> | string
   score?: Prisma.IntNullableFilter<"DefenseSession"> | number | null
@@ -258,7 +254,7 @@ export type DefenseSessionOrderByWithRelationInput = {
 }
 
 export type DefenseSessionWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
   OR?: Prisma.DefenseSessionWhereInput[]
   NOT?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
@@ -291,7 +287,7 @@ export type DefenseSessionScalarWhereWithAggregatesInput = {
   AND?: Prisma.DefenseSessionScalarWhereWithAggregatesInput | Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
   OR?: Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DefenseSessionScalarWhereWithAggregatesInput | Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"DefenseSession"> | number
+  id?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   title?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   codeSnippet?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   score?: Prisma.IntNullableWithAggregatesFilter<"DefenseSession"> | number | null
@@ -302,6 +298,7 @@ export type DefenseSessionScalarWhereWithAggregatesInput = {
 }
 
 export type DefenseSessionCreateInput = {
+  id?: string
   title: string
   codeSnippet: string
   score?: number | null
@@ -312,7 +309,7 @@ export type DefenseSessionCreateInput = {
 }
 
 export type DefenseSessionUncheckedCreateInput = {
-  id?: number
+  id?: string
   title: string
   codeSnippet: string
   score?: number | null
@@ -323,6 +320,7 @@ export type DefenseSessionUncheckedCreateInput = {
 }
 
 export type DefenseSessionUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -333,7 +331,7 @@ export type DefenseSessionUpdateInput = {
 }
 
 export type DefenseSessionUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -344,7 +342,7 @@ export type DefenseSessionUncheckedUpdateInput = {
 }
 
 export type DefenseSessionCreateManyInput = {
-  id?: number
+  id?: string
   title: string
   codeSnippet: string
   score?: number | null
@@ -355,6 +353,7 @@ export type DefenseSessionCreateManyInput = {
 }
 
 export type DefenseSessionUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -365,7 +364,7 @@ export type DefenseSessionUpdateManyMutationInput = {
 }
 
 export type DefenseSessionUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -387,7 +386,6 @@ export type DefenseSessionCountOrderByAggregateInput = {
 }
 
 export type DefenseSessionAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   score?: Prisma.SortOrder
 }
 
@@ -414,7 +412,6 @@ export type DefenseSessionMinOrderByAggregateInput = {
 }
 
 export type DefenseSessionSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   score?: Prisma.SortOrder
 }
 
@@ -432,14 +429,6 @@ export type NullableIntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 
@@ -494,7 +483,7 @@ export type $DefenseSessionPayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "DefenseSession"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     title: string
     codeSnippet: string
     score: number | null
@@ -925,7 +914,7 @@ export interface Prisma__DefenseSessionClient<T, Null = never, ExtArgs extends r
  * Fields of the DefenseSession model
  */
 export interface DefenseSessionFieldRefs {
-  readonly id: Prisma.FieldRef<"DefenseSession", 'Int'>
+  readonly id: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly title: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly codeSnippet: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly score: Prisma.FieldRef<"DefenseSession", 'Int'>

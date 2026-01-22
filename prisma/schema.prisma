@@ -14,12 +14,12 @@ datasource db {
 }
 
 model DefenseSession {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid()) 
   title String
   codeSnippet String @db.Text
   score     Int?
   questions  String
   login String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -3,11 +3,11 @@ import {  NextResponse } from "next/server";
 
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
-	const login = searchParams.get("login");
-	const id = +searchParams.get("id")
+	const login = searchParams.get("login") || "";
+    const id = searchParams.get("id")
 	if (id) {
 		try {
-			const sessions = await prisma.defenseSession.findMany({
+			const sessions = await prisma.defenseSession.findUnique({
 				where: {
 					login,
 					id
@@ -23,7 +23,12 @@ export async function GET(req: Request) {
 			const sessions = await prisma.defenseSession.findMany({
 				where: {
 					login,
-				}
+				},
+                  select: {
+                    id: true,
+                    title: true,
+                    score: true
+                },
 			})
 			return NextResponse.json(sessions);
 		} catch (err) {
@@ -43,6 +48,23 @@ export async function POST(req: Request) {
 				codeSnippet,
 				score,
 				questions
+			}
+		})
+		return NextResponse.json(session)
+	} catch (err) {
+		console.error(err)
+	}
+}
+
+export async function PATCH(req: Request) {
+	const {id, score} = await req.json()
+	try {
+		const session = await prisma.defenseSession.update({
+			where: {
+				id,
+			},
+			data: {
+				score,
 			}
 		})
 		return NextResponse.json(session)
