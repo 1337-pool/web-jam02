@@ -116,6 +116,7 @@ export default function Quiz({
   }
 
   const score = showResults ? getScore() : null
+
   const allAnswered = Object.keys(selectedAnswers).length === quizData.questions.length
 
   return (
@@ -238,6 +239,7 @@ export default function Quiz({
               }
             `}>
               Score: {score.correct}/{score.total} ({Math.round((score.correct / score.total) * 100)}%)
+              
             </div>
             <button
               onClick={handleReset}

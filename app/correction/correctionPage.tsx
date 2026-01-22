@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send, Play, Loader2, CheckCircle2 } from "lucide-react";
 import MessageComponent from "@/components/ui/chat/components/Message.jsx";
 import Quiz, { QuizData } from "@/components/ui/chat/components/Quiz";
+import { Cossette_Texte } from "next/font/google";
 
 interface MessageType {
   id: string;
@@ -41,7 +42,8 @@ print(fibonacci(10))`);
   const [isFinished, setIsFinished] = useState(false);
   const [userQuizAnswers, setUserQuizAnswers] = useState<Record<number, number>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  const [score, setScore] = useState(null);
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -55,10 +57,27 @@ print(fibonacci(10))`);
       alert("Please provide some Python code to correct");
       return;
     }
-
-    setIsStarting(true);
+    
+    
     try {
-      // Generate quiz based on the code
+      
+      const error = await fetch('https://emkc.org/api/v2/piston/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          language: 'python',
+          version: '3.10.0',
+          files: [{ content: code }]
+        })
+      });
+      const err = await error.json()
+      if(err.run.output.toString().split("line")[1])
+        {
+          alert("in line " + err.run.output.toString().split("line")[1])
+          return  
+        }
+        // Generate quiz based on the code
+      setIsStarting(true);
       const quizPrompt = `Based on this Python code, create a quiz with 4 questions to test understanding. The quiz should cover key concepts, logic, and functionality of the code. Return ONLY a JSON object with this format:
 {
   "title": "Quiz Title",
@@ -143,6 +162,7 @@ ${code}`;
     setIsLoading(true);
 
     try {
+    
       const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -175,6 +195,10 @@ ${code}`;
     }
   };
 
+
+
+
+
   const finishCorrection = () => {
     if (!sessionId || !quizData) return;
     
@@ -184,7 +208,6 @@ ${code}`;
       alert("Please answer all questions before finishing the correction.");
       return;
     }
-    
     setIsFinished(true);
   };
 
@@ -281,7 +304,8 @@ ${code}`;
                   </div>
                 )}
                 <MessageComponent role="assistant">
-                  <Quiz 
+                  <Quiz
+                    
                     quizData={quizData} 
                     showAnswersImmediately={isFinished}
                     userAnswers={isFinished ? userQuizAnswers : userQuizAnswers}
