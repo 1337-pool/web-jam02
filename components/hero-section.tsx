@@ -167,7 +167,7 @@ export default function HeroSection() {
 
   const handleCTAClick = () => {
     if (session)
-      router.push("/chat")
+      router.push("/correction")
     else
       signIn("42-school")
   }

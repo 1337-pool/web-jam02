@@ -13,6 +13,7 @@ export default function Home() {
         <p>Login: {(session.user as any)?.login}</p>
         <button onClick={() => signOut()}>Sign out</button>
 
+      <AIAssistantUI /> 
       </div>
     );
   }
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <>
       <button onClick={() => signIn("42-school")}>Sign in with 42</button>
-      <AIAssistantUI /> 
+      {/* <AIAssistantUI />  */}
     </>
   )
         
