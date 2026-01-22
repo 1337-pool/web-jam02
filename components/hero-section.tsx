@@ -5,6 +5,11 @@ import { ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import MatrixRain from "./elements/matrix-rain"
 import AnimatedLogoGreen from "./elements/animated-logo-green"
+import { SparklesText } from "./elements/magic-text"
+import { signIn, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { HyperText } from "./elements/hyper"
+// import { useRouter } from "next/router"
 // import MatrixRain from "@/components/matrix-rain"
 // import AnimatedLogoGreen from "@/components/animated-logo-green"
 
@@ -139,11 +144,10 @@ const AnimatedLogo = () => {
 }
 
 const avatars = [
-  { src: "https://i.pravatar.cc/150?img=1", fallback: "JD" },
-  { src: "https://i.pravatar.cc/150?img=2", fallback: "SM" },
-  { src: "https://i.pravatar.cc/150?img=3", fallback: "RK" },
-  { src: "https://i.pravatar.cc/150?img=4", fallback: "AL" },
-  { src: "https://i.pravatar.cc/150?img=5", fallback: "MJ" },
+    { src: "https://cdn.intra.42.fr/users/cbe399f2beda07759a554cef6f6b183e/hahchtar.jpeg", fallback: "HA" },
+    { src: "https://cdn.intra.42.fr/users/021d275ab099ed2131d6d3b06ef99d06/aeddiba.jpeg", fallback: "AE" },
+    { src: "https://cdn.intra.42.fr/users/435a7b4522293610ad7c9ae6f4905094/aerrabou.jpeg", fallback: "AE" },
+    { src: "https://cdn.intra.42.fr/users/7c445cc0d6f98dd331df26d42adfc49a/mjaber.jpeg", fallback: "MJ" },
 ]
 
 export default function HeroSection() {
@@ -156,6 +160,16 @@ export default function HeroSection() {
         delayChildren: 0.2
       }
     }
+  }
+
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  const handleCTAClick = () => {
+    if (session)
+      router.push("/correction")
+    else
+      signIn("42-school")
   }
 
   const itemVariants = {
@@ -183,7 +197,7 @@ export default function HeroSection() {
     })
   }
 
-  const headlineWords = ["Achieve", "More", "with", "Elite", "Access", "Pro"]
+  const headlineWords = ["Test", "Your", "Self", "With", "HYDRATE", "Pro"]
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -205,8 +219,10 @@ export default function HeroSection() {
             variants={itemVariants}
             className="mb-12 md:mb-16"
           >
-            <span className="text-neutral-400 text-lg md:text-xl tracking-wide">Business </span>
-            <span className="text-white text-lg md:text-xl font-semibold tracking-wide">PRO</span>
+            <SparklesText>
+                <span className="text-neutral-400 text-lg md:text-xl tracking-wide">HYDRATE</span>
+                <span className="text-white text-lg md:text-xl font-semibold tracking-wide">PRO</span>
+            </SparklesText>
           </motion.div>
 
           {/* Headline with word-by-word animation */}
@@ -232,12 +248,13 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-neutral-400 text-base md:text-lg leading-relaxed mb-10 md:mb-12 max-w-md"
           >
-            Enhance your career hunt with increased visibility, first-look opportunities and monetary incentives!
+            Put Your Knowledge to the Test and Earn Your Chance!
           </motion.p>
 
           {/* CTA Button */}
           <motion.div variants={itemVariants}>
             <motion.button
+              onClick={handleCTAClick}
               className="group relative bg-white text-black px-6 py-3.5 rounded-full flex items-center gap-3 font-medium text-sm md:text-base overflow-hidden"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -248,7 +265,7 @@ export default function HeroSection() {
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               />
-              <span className="relative z-10">Upgrade to premium</span>
+              <span className="relative z-10">Get start</span>
               <motion.span
                 className="relative z-10"
                 initial={{ x: 0 }}
@@ -292,8 +309,9 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6, duration: 0.6 }}
             >
-              More than <span className="text-neutral-300 font-medium">1 million</span> medical<br />
-              practitioners rely on <span className="text-neutral-300 font-medium">CareerMed</span>
+              <HyperText className="">
+                Created by mjaber, hahchtar, aeddiba and aerrabou
+              </HyperText>
             </motion.p>
           </motion.div>
         </motion.div>
