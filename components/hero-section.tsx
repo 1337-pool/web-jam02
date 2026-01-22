@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import MatrixRain from "./elements/matrix-rain"
@@ -14,7 +14,7 @@ import { HyperText } from "./elements/hyper"
 // import AnimatedLogoGreen from "@/components/animated-logo-green"
 
 const AnimatedLogo = () => {
-  const pathVariants = {
+  const pathVariants: Variants = {
     hidden: { 
       pathLength: 0,
       opacity: 0 
@@ -36,7 +36,7 @@ const AnimatedLogo = () => {
     })
   }
 
-  const fillVariants = {
+  const fillVariants: Variants = {
     hidden: { 
       fillOpacity: 0
     },
@@ -50,7 +50,7 @@ const AnimatedLogo = () => {
     })
   }
 
-  const glowVariants = {
+  const glowVariants: Variants = {
     animate: {
       filter: [
         "drop-shadow(0 0 0px rgba(10, 10, 10, 0))",
@@ -172,7 +172,7 @@ export default function HeroSection() {
       signIn("42-school")
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -184,7 +184,7 @@ export default function HeroSection() {
     }
   }
 
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
       opacity: 1,

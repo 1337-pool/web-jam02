@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { LogOutIcon, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -10,50 +10,49 @@ import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 const navLinks = [
-  { name: "Home", href: "/test" },
-  { name: "Correction", href: "/correction" },
+  { name: "Home", href: "/" },
+  { name: "Correction", href: "/correction/new" },
   // { name: "About Us", href: "/about" },
   // { name: "Contacts", href: "/contacts" },
 ]
 
 function AnimatedLogo1337({ className = "", isAnimating = false }: { className?: string; isAnimating?: boolean }) {
-  const pathVariants = {
-    hidden: { 
-      pathLength: 0,
-      opacity: 0 
-    },
-    visible: (i: number) => ({
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: {
-          delay: i * 0.15,
-          duration: 0.8,
-          ease: "easeInOut",
-        },
-        opacity: {
-          delay: i * 0.15,
-          duration: 0.2,
-          ease: "easeInOut",
-        }
-      }
-    })
-  }
-
-  const fillVariants = {
-    hidden: { 
-      fillOpacity: 0
-    },
-    visible: (i: number) => ({
-      fillOpacity: 1,
-      transition: {
-        delay: i * 0.15 + 0.6,
-        duration: 0.3,
+  const pathVariants: Variants = {
+  hidden: { 
+    pathLength: 0,
+    opacity: 0 
+  },
+  visible: (i: number) => ({
+    pathLength: 1,
+    opacity: 1,
+    transition: {
+      pathLength: {
+        delay: i * 0.15,
+        duration: 0.8,
+        ease: "easeInOut",
+      },
+      opacity: {
+        delay: i * 0.15,
+        duration: 0.2,
         ease: "easeInOut",
       }
-    })
-  }
+    }
+  })
+}
 
+const fillVariants: Variants = {
+  hidden: { 
+    fillOpacity: 0
+  },
+  visible: (i: number) => ({
+    fillOpacity: 1,
+    transition: {
+      delay: i * 0.15 + 0.6,
+      duration: 0.3,
+      ease: "easeInOut",
+    }
+  })
+}
   return (
     <motion.svg
       viewBox="0 0 76 20"

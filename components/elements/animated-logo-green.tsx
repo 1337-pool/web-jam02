@@ -1,9 +1,10 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 
 const AnimatedLogoGreen = () => {
-  const pathVariants = {
+  // Added : Variants to fix the "TargetResolver" type mismatch
+  const pathVariants: Variants = {
     hidden: { 
       pathLength: 0,
       opacity: 0 
@@ -25,7 +26,8 @@ const AnimatedLogoGreen = () => {
     })
   }
 
-  const fillVariants = {
+  // Added : Variants here as well
+  const fillVariants: Variants = {
     hidden: { 
       fillOpacity: 0
     },

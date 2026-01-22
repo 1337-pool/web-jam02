@@ -1,10 +1,10 @@
 "use client"
 
-import { motion } from "framer-motion"
-// import { Navbar } from "@/components/navbar"
+import { motion, Variants } from "framer-motion" // Added Variants import
 
 function AnimatedNotFound() {
-  const pathVariants = {
+  // Explicitly type as Variants to allow dynamic resolvers and complex transitions
+  const pathVariants: Variants = {
     hidden: { 
       pathLength: 0,
       opacity: 0 
@@ -33,7 +33,7 @@ function AnimatedNotFound() {
     })
   }
 
-  const fillVariants = {
+  const fillVariants: Variants = {
     hidden: { 
       fillOpacity: 0
     },
@@ -74,6 +74,8 @@ function AnimatedNotFound() {
         variants={fillVariants}
       />
 
+      {/* ... Rest of your SVG paths remain exactly the same ... */}
+      
       {/* O */}
       <motion.path
         d="M30 10H50V40H30V10ZM35 15V35H45V15H35Z"
@@ -192,10 +194,7 @@ function AnimatedNotFound() {
 export default function NotFoundPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col relative overflow-hidden">
-      {/* <Navbar /> */}
-      
       <div className="flex-1 flex items-center justify-center relative">
-        {/* Background glow */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="w-[500px] h-[300px] rounded-full bg-white/5 blur-3xl"
@@ -211,17 +210,10 @@ export default function NotFoundPage() {
           />
         </div>
 
-        {/* Animated text */}
         <motion.div
           className="relative z-10"
-          animate={{ 
-            y: [0, -10, 0],
-          }}
-          transition={{ 
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -237,18 +229,13 @@ export default function NotFoundPage() {
             transition={{
               opacity: { duration: 0.5 },
               scale: { duration: 0.5 },
-              filter: {
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
+              filter: { duration: 3, repeat: Infinity, ease: "easeInOut" }
             }}
           >
             <AnimatedNotFound />
           </motion.div>
         </motion.div>
 
-        {/* 404 code */}
         <motion.div 
           className="absolute bottom-20 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
