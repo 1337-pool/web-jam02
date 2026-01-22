@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send, Play, Loader2, CheckCircle2 } from "lucide-react";
 import MessageComponent from "@/components/ui/chat/components/Message.jsx";
 import Quiz, { QuizData } from "@/components/ui/chat/components/Quiz";
-import { Cossette_Texte } from "next/font/google";
+import { Courgette as Cossette_Texte } from "next/font/google";
 import { toast } from "sonner";
 
 interface MessageType {
@@ -308,10 +308,10 @@ ${code}`;
   return (
     <div className="h-screen flex flex-col bg-zinc-950 text-zinc-100 dark">
       {/* Header */}
-      <div className="border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-zinc-800 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between flex-shrink-0">
         <div>
-          <h1 className="text-2xl font-bold">Code Correction</h1>
-          <p className="text-sm text-zinc-400">
+          <h1 className="text-xl md:text-2xl font-bold">Code Correction</h1>
+          <p className="text-xs md:text-sm text-zinc-400">
             {sessionId ? "Session active" : "Ready to start"}
           </p>
         </div>
@@ -320,17 +320,19 @@ ${code}`;
             <Button
               onClick={startCorrection}
               disabled={isStarting}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-sm md:text-base"
             >
               {isStarting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Starting...
+                  <span className="hidden sm:inline">Starting...</span>
+                  <span className="sm:hidden">...</span>
                 </>
               ) : (
                 <>
                   <Play className="mr-2 h-4 w-4" />
-                  Start Correction
+                  <span className="hidden sm:inline">Start Correction</span>
+                  <span className="sm:hidden">Start</span>
                 </>
               )}
             </Button>
@@ -339,17 +341,19 @@ ${code}`;
             <Button
               onClick={finishCorrection}
               disabled={isFinishing || Object.keys(userQuizAnswers).length !== quizData.questions.length}
-              className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
             >
               {isFinishing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
+                  <span className="hidden sm:inline">Processing...</span>
+                  <span className="sm:hidden">...</span>
                 </>
               ) : (
                 <>
                   <CheckCircle2 className="mr-2 h-4 w-4" />
-                  Finish Correction
+                  <span className="hidden sm:inline">Finish Correction</span>
+                  <span className="sm:hidden">Finish</span>
                 </>
               )}
             </Button>
@@ -358,9 +362,9 @@ ${code}`;
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
         {/* Code Editor */}
-        <div className="w-1/2 border-r border-zinc-800">
+        <div className="h-[40vh] md:h-full w-full md:w-1/2 border-b md:border-b-0 md:border-r border-zinc-800 flex-shrink-0 md:flex-shrink">
           <CodeEditor
             code={code}
             onChange={(value) => setCode(value || "")}
@@ -369,17 +373,17 @@ ${code}`;
         </div>
 
         {/* Chat Panel */}
-        <div className="w-1/2 flex flex-col">
+        <div className="flex-1 md:w-1/2 flex flex-col min-h-0 overflow-hidden">
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
             {quizData ? (
               <div className="space-y-4">
                 {isFinished && (
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-                    <h2 className="text-xl font-semibold mb-2 text-green-400">
+                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 md:p-6">
+                    <h2 className="text-lg md:text-xl font-semibold mb-2 text-green-400">
                       Correction Complete!
                     </h2>
-                    <p className="text-sm text-zinc-400 mb-4">
+                    <p className="text-xs md:text-sm text-zinc-400 mb-4">
                       Review the quiz below to see the correct answers and your score.
                     </p>
                   </div>
@@ -396,9 +400,9 @@ ${code}`;
               </div>
             ) : messages.length === 0 ? (
               <div className="flex items-center justify-center h-full">
-                <div className="text-center text-zinc-500">
-                  <p className="text-lg mb-2">No messages yet</p>
-                  <p className="text-sm">
+                <div className="text-center text-zinc-500 px-4">
+                  <p className="text-base md:text-lg mb-2">No messages yet</p>
+                  <p className="text-xs md:text-sm">
                     Click "Start Correction" to begin the evaluation
                   </p>
                 </div>
@@ -428,38 +432,6 @@ ${code}`;
               </>
             )}
           </div>
-
-          {/* Input */}
-          {/* {sessionId && !isFinished && (
-            <div className="border-t border-zinc-800 p-4">
-              <div className="flex gap-2">
-                <Textarea
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      sendMessage();
-                    }
-                  }}
-                  placeholder="Answer the corrector's question..."
-                  className="min-h-[60px] resize-none bg-zinc-900 border-zinc-800 text-zinc-100"
-                  disabled={isLoading}
-                />
-                <Button
-                  onClick={sendMessage}
-                  disabled={isLoading || !inputMessage.trim()}
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  {isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
-          )} */}
         </div>
       </div>
     </div>

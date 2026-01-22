@@ -1,9 +1,5 @@
-import HeroSection from "@/components/hero-section"
+import LoadingPage from "@/components/elements/loading-page"
 
-export default function Home() {
-  return (
-    <main>
-      <HeroSection />
-    </main>
-  )
+export default function Loading() {
+  return <LoadingPage />
 }
