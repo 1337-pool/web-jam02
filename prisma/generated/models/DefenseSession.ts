@@ -27,63 +27,91 @@ export type AggregateDefenseSession = {
 }
 
 export type DefenseSessionAvgAggregateOutputType = {
+  id: number | null
   score: number | null
 }
 
 export type DefenseSessionSumAggregateOutputType = {
+  id: number | null
   score: number | null
 }
 
 export type DefenseSessionMinAggregateOutputType = {
-  id: string | null
+  id: number | null
+  title: string | null
   codeSnippet: string | null
   score: number | null
+  questions: string | null
+  login: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DefenseSessionMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
+  title: string | null
   codeSnippet: string | null
   score: number | null
+  questions: string | null
+  login: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DefenseSessionCountAggregateOutputType = {
   id: number
+  title: number
   codeSnippet: number
   score: number
+  questions: number
+  login: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
 export type DefenseSessionAvgAggregateInputType = {
+  id?: true
   score?: true
 }
 
 export type DefenseSessionSumAggregateInputType = {
+  id?: true
   score?: true
 }
 
 export type DefenseSessionMinAggregateInputType = {
   id?: true
+  title?: true
   codeSnippet?: true
   score?: true
+  questions?: true
+  login?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type DefenseSessionMaxAggregateInputType = {
   id?: true
+  title?: true
   codeSnippet?: true
   score?: true
+  questions?: true
+  login?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type DefenseSessionCountAggregateInputType = {
   id?: true
+  title?: true
   codeSnippet?: true
   score?: true
+  questions?: true
+  login?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -174,10 +202,14 @@ export type DefenseSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type DefenseSessionGroupByOutputType = {
-  id: string
+  id: number
+  title: string
   codeSnippet: string
   score: number | null
+  questions: string
+  login: string
   createdAt: Date
+  updatedAt: Date
   _count: DefenseSessionCountAggregateOutputType | null
   _avg: DefenseSessionAvgAggregateOutputType | null
   _sum: DefenseSessionSumAggregateOutputType | null
@@ -204,37 +236,50 @@ export type DefenseSessionWhereInput = {
   AND?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
   OR?: Prisma.DefenseSessionWhereInput[]
   NOT?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
-  id?: Prisma.StringFilter<"DefenseSession"> | string
+  id?: Prisma.IntFilter<"DefenseSession"> | number
+  title?: Prisma.StringFilter<"DefenseSession"> | string
   codeSnippet?: Prisma.StringFilter<"DefenseSession"> | string
   score?: Prisma.IntNullableFilter<"DefenseSession"> | number | null
+  questions?: Prisma.StringFilter<"DefenseSession"> | string
+  login?: Prisma.StringFilter<"DefenseSession"> | string
   createdAt?: Prisma.DateTimeFilter<"DefenseSession"> | Date | string
-  messages?: Prisma.MessageListRelationFilter
+  updatedAt?: Prisma.DateTimeFilter<"DefenseSession"> | Date | string
 }
 
 export type DefenseSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   codeSnippet?: Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
+  questions?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  messages?: Prisma.MessageOrderByRelationAggregateInput
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DefenseSessionWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
   OR?: Prisma.DefenseSessionWhereInput[]
   NOT?: Prisma.DefenseSessionWhereInput | Prisma.DefenseSessionWhereInput[]
+  title?: Prisma.StringFilter<"DefenseSession"> | string
   codeSnippet?: Prisma.StringFilter<"DefenseSession"> | string
   score?: Prisma.IntNullableFilter<"DefenseSession"> | number | null
+  questions?: Prisma.StringFilter<"DefenseSession"> | string
+  login?: Prisma.StringFilter<"DefenseSession"> | string
   createdAt?: Prisma.DateTimeFilter<"DefenseSession"> | Date | string
-  messages?: Prisma.MessageListRelationFilter
+  updatedAt?: Prisma.DateTimeFilter<"DefenseSession"> | Date | string
 }, "id">
 
 export type DefenseSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   codeSnippet?: Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
+  questions?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.DefenseSessionCountOrderByAggregateInput
   _avg?: Prisma.DefenseSessionAvgOrderByAggregateInput
   _max?: Prisma.DefenseSessionMaxOrderByAggregateInput
@@ -246,97 +291,131 @@ export type DefenseSessionScalarWhereWithAggregatesInput = {
   AND?: Prisma.DefenseSessionScalarWhereWithAggregatesInput | Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
   OR?: Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DefenseSessionScalarWhereWithAggregatesInput | Prisma.DefenseSessionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
+  id?: Prisma.IntWithAggregatesFilter<"DefenseSession"> | number
+  title?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   codeSnippet?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   score?: Prisma.IntNullableWithAggregatesFilter<"DefenseSession"> | number | null
+  questions?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
+  login?: Prisma.StringWithAggregatesFilter<"DefenseSession"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DefenseSession"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DefenseSession"> | Date | string
 }
 
 export type DefenseSessionCreateInput = {
-  id?: string
+  title: string
   codeSnippet: string
   score?: number | null
+  questions: string
+  login: string
   createdAt?: Date | string
-  messages?: Prisma.MessageCreateNestedManyWithoutSessionInput
+  updatedAt?: Date | string
 }
 
 export type DefenseSessionUncheckedCreateInput = {
-  id?: string
+  id?: number
+  title: string
   codeSnippet: string
   score?: number | null
+  questions: string
+  login: string
   createdAt?: Date | string
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSessionInput
+  updatedAt?: Date | string
 }
 
 export type DefenseSessionUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  questions?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUpdateManyWithoutSessionNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DefenseSessionUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  questions?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutSessionNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DefenseSessionCreateManyInput = {
-  id?: string
+  id?: number
+  title: string
   codeSnippet: string
   score?: number | null
+  questions: string
+  login: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DefenseSessionUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  questions?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DefenseSessionUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  questions?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DefenseSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   codeSnippet?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  questions?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DefenseSessionAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   score?: Prisma.SortOrder
 }
 
 export type DefenseSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   codeSnippet?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  questions?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DefenseSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   codeSnippet?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  questions?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DefenseSessionSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   score?: Prisma.SortOrder
-}
-
-export type DefenseSessionScalarRelationFilter = {
-  is?: Prisma.DefenseSessionWhereInput
-  isNot?: Prisma.DefenseSessionWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -355,143 +434,74 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type DefenseSessionCreateNestedOneWithoutMessagesInput = {
-  create?: Prisma.XOR<Prisma.DefenseSessionCreateWithoutMessagesInput, Prisma.DefenseSessionUncheckedCreateWithoutMessagesInput>
-  connectOrCreate?: Prisma.DefenseSessionCreateOrConnectWithoutMessagesInput
-  connect?: Prisma.DefenseSessionWhereUniqueInput
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type DefenseSessionUpdateOneRequiredWithoutMessagesNestedInput = {
-  create?: Prisma.XOR<Prisma.DefenseSessionCreateWithoutMessagesInput, Prisma.DefenseSessionUncheckedCreateWithoutMessagesInput>
-  connectOrCreate?: Prisma.DefenseSessionCreateOrConnectWithoutMessagesInput
-  upsert?: Prisma.DefenseSessionUpsertWithoutMessagesInput
-  connect?: Prisma.DefenseSessionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DefenseSessionUpdateToOneWithWhereWithoutMessagesInput, Prisma.DefenseSessionUpdateWithoutMessagesInput>, Prisma.DefenseSessionUncheckedUpdateWithoutMessagesInput>
-}
-
-export type DefenseSessionCreateWithoutMessagesInput = {
-  id?: string
-  codeSnippet: string
-  score?: number | null
-  createdAt?: Date | string
-}
-
-export type DefenseSessionUncheckedCreateWithoutMessagesInput = {
-  id?: string
-  codeSnippet: string
-  score?: number | null
-  createdAt?: Date | string
-}
-
-export type DefenseSessionCreateOrConnectWithoutMessagesInput = {
-  where: Prisma.DefenseSessionWhereUniqueInput
-  create: Prisma.XOR<Prisma.DefenseSessionCreateWithoutMessagesInput, Prisma.DefenseSessionUncheckedCreateWithoutMessagesInput>
-}
-
-export type DefenseSessionUpsertWithoutMessagesInput = {
-  update: Prisma.XOR<Prisma.DefenseSessionUpdateWithoutMessagesInput, Prisma.DefenseSessionUncheckedUpdateWithoutMessagesInput>
-  create: Prisma.XOR<Prisma.DefenseSessionCreateWithoutMessagesInput, Prisma.DefenseSessionUncheckedCreateWithoutMessagesInput>
-  where?: Prisma.DefenseSessionWhereInput
-}
-
-export type DefenseSessionUpdateToOneWithWhereWithoutMessagesInput = {
-  where?: Prisma.DefenseSessionWhereInput
-  data: Prisma.XOR<Prisma.DefenseSessionUpdateWithoutMessagesInput, Prisma.DefenseSessionUncheckedUpdateWithoutMessagesInput>
-}
-
-export type DefenseSessionUpdateWithoutMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DefenseSessionUncheckedUpdateWithoutMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  codeSnippet?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type DefenseSessionCountOutputType
- */
-
-export type DefenseSessionCountOutputType = {
-  messages: number
-}
-
-export type DefenseSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  messages?: boolean | DefenseSessionCountOutputTypeCountMessagesArgs
-}
-
-/**
- * DefenseSessionCountOutputType without action
- */
-export type DefenseSessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the DefenseSessionCountOutputType
-   */
-  select?: Prisma.DefenseSessionCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * DefenseSessionCountOutputType without action
- */
-export type DefenseSessionCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MessageWhereInput
-}
 
 
 export type DefenseSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  title?: boolean
   codeSnippet?: boolean
   score?: boolean
+  questions?: boolean
+  login?: boolean
   createdAt?: boolean
-  messages?: boolean | Prisma.DefenseSession$messagesArgs<ExtArgs>
-  _count?: boolean | Prisma.DefenseSessionCountOutputTypeDefaultArgs<ExtArgs>
+  updatedAt?: boolean
 }, ExtArgs["result"]["defenseSession"]>
 
 export type DefenseSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  title?: boolean
   codeSnippet?: boolean
   score?: boolean
+  questions?: boolean
+  login?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["defenseSession"]>
 
 export type DefenseSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  title?: boolean
   codeSnippet?: boolean
   score?: boolean
+  questions?: boolean
+  login?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["defenseSession"]>
 
 export type DefenseSessionSelectScalar = {
   id?: boolean
+  title?: boolean
   codeSnippet?: boolean
   score?: boolean
+  questions?: boolean
+  login?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type DefenseSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codeSnippet" | "score" | "createdAt", ExtArgs["result"]["defenseSession"]>
-export type DefenseSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  messages?: boolean | Prisma.DefenseSession$messagesArgs<ExtArgs>
-  _count?: boolean | Prisma.DefenseSessionCountOutputTypeDefaultArgs<ExtArgs>
-}
-export type DefenseSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type DefenseSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type DefenseSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "codeSnippet" | "score" | "questions" | "login" | "createdAt" | "updatedAt", ExtArgs["result"]["defenseSession"]>
 
 export type $DefenseSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DefenseSession"
-  objects: {
-    messages: Prisma.$MessagePayload<ExtArgs>[]
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
+    title: string
     codeSnippet: string
     score: number | null
+    questions: string
+    login: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["defenseSession"]>
   composites: {}
 }
@@ -886,7 +896,6 @@ readonly fields: DefenseSessionFieldRefs;
  */
 export interface Prisma__DefenseSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  messages<T extends Prisma.DefenseSession$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DefenseSession$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -916,10 +925,14 @@ export interface Prisma__DefenseSessionClient<T, Null = never, ExtArgs extends r
  * Fields of the DefenseSession model
  */
 export interface DefenseSessionFieldRefs {
-  readonly id: Prisma.FieldRef<"DefenseSession", 'String'>
+  readonly id: Prisma.FieldRef<"DefenseSession", 'Int'>
+  readonly title: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly codeSnippet: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly score: Prisma.FieldRef<"DefenseSession", 'Int'>
+  readonly questions: Prisma.FieldRef<"DefenseSession", 'String'>
+  readonly login: Prisma.FieldRef<"DefenseSession", 'String'>
   readonly createdAt: Prisma.FieldRef<"DefenseSession", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"DefenseSession", 'DateTime'>
 }
     
 
@@ -936,10 +949,6 @@ export type DefenseSessionFindUniqueArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the DefenseSession
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
   /**
    * Filter, which DefenseSession to fetch.
    */
@@ -959,10 +968,6 @@ export type DefenseSessionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
-  /**
    * Filter, which DefenseSession to fetch.
    */
   where: Prisma.DefenseSessionWhereUniqueInput
@@ -980,10 +985,6 @@ export type DefenseSessionFindFirstArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the DefenseSession
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
   /**
    * Filter, which DefenseSession to fetch.
    */
@@ -1033,10 +1034,6 @@ export type DefenseSessionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
-  /**
    * Filter, which DefenseSession to fetch.
    */
   where?: Prisma.DefenseSessionWhereInput
@@ -1085,10 +1082,6 @@ export type DefenseSessionFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
-  /**
    * Filter, which DefenseSessions to fetch.
    */
   where?: Prisma.DefenseSessionWhereInput
@@ -1131,10 +1124,6 @@ export type DefenseSessionCreateArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the DefenseSession
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
   /**
    * The data needed to create a DefenseSession.
    */
@@ -1183,10 +1172,6 @@ export type DefenseSessionUpdateArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the DefenseSession
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
   /**
    * The data needed to update a DefenseSession.
    */
@@ -1254,10 +1239,6 @@ export type DefenseSessionUpsertArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
-  /**
    * The filter to search for the DefenseSession to update in case it exists.
    */
   where: Prisma.DefenseSessionWhereUniqueInput
@@ -1284,10 +1265,6 @@ export type DefenseSessionDeleteArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
-  /**
    * Filter which DefenseSession to delete.
    */
   where: Prisma.DefenseSessionWhereUniqueInput
@@ -1308,30 +1285,6 @@ export type DefenseSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * DefenseSession.messages
- */
-export type DefenseSession$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Message
-   */
-  select?: Prisma.MessageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Message
-   */
-  omit?: Prisma.MessageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MessageInclude<ExtArgs> | null
-  where?: Prisma.MessageWhereInput
-  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
-  cursor?: Prisma.MessageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
-}
-
-/**
  * DefenseSession without action
  */
 export type DefenseSessionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1343,8 +1296,4 @@ export type DefenseSessionDefaultArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the DefenseSession
    */
   omit?: Prisma.DefenseSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DefenseSessionInclude<ExtArgs> | null
 }

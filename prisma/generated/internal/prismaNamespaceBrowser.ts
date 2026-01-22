@@ -51,8 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  DefenseSession: 'DefenseSession',
-  Message: 'Message'
+  DefenseSession: 'DefenseSession'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,24 +72,16 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const DefenseSessionScalarFieldEnum = {
   id: 'id',
+  title: 'title',
   codeSnippet: 'codeSnippet',
   score: 'score',
-  createdAt: 'createdAt'
+  questions: 'questions',
+  login: 'login',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DefenseSessionScalarFieldEnum = (typeof DefenseSessionScalarFieldEnum)[keyof typeof DefenseSessionScalarFieldEnum]
-
-
-export const MessageScalarFieldEnum = {
-  id: 'id',
-  role: 'role',
-  login: 'login',
-  content: 'content',
-  sessionId: 'sessionId',
-  createdAt: 'createdAt'
-} as const
-
-export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
 export const SortOrder = {

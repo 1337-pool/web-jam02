@@ -14,19 +14,12 @@ datasource db {
 }
 
 model DefenseSession {
-  id        String   @id @default(cuid())
+  id Int @id @default(autoincrement())
+  title String
   codeSnippet String @db.Text
   score     Int?
-  messages  Message[]
+  questions  String
+  login String
   createdAt DateTime @default(now())
-}
-
-model Message {
-  id        String   @id @default(cuid())
-  role      String
-  login      String
-  content   String   @db.Text
-  sessionId String
-  session   DefenseSession @relation(fields: [sessionId], references: [id])
-  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
