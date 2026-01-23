@@ -90,6 +90,6 @@ Follow these steps to run the project locally.
     ```
 
 5.  **Open the app**
-    Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+    Navigate to [https://hydrate-blush.vercel.app/]((https://hydrate-blush.vercel.app/)) in your browser.
 
 ---
