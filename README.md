@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 1337 Web Jam 02 - Code Comprehension Verifier
 
-## Getting Started
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-First, run the development server:
+<div align="center">
+  <h3> AI-Powered Code Defense & Knowledge Check</h3>
+  <p>
+    An intelligent assessment platform that generates dynamic quizzes based on source code 
+    to verify a developer's true understanding of their submission.
+  </p>
+  <br />
+  <!-- OPTIONAL: Add a link to a live demo if you have one -->
+  <!-- <a href="https://your-demo-link.com">View Demo</a> -->
+</div>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##  The Problem
+In the era of AI coding assistants and Copy/Paste solutions, submitting code is easy. Understanding it is the hard part. 
+**How do we prove a student actually wrote—or at least understands—the logic they turned in?**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+##  Our Solution
+We built a **Full Stack Next.js** application that utilizes the **OpenAI API** to act as an automated oral examiner.
+1.  **Analyze:** The system reads the user's submitted code.
+2.  **Generate:** It dynamically creates a multiple-choice quiz tailored specifically to the logic, syntax, and architecture of that code.
+3.  **Verify:** It calculates a "Comprehension Score" based on the user's answers.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+##  How It Works
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Code Submission**: The user uploads files or pastes their code into the editor.
+2.  **AI Processing**: The backend sends the code context to OpenAI with a strict prompt to generate relevant technical questions.
+3.  **Quiz Phase**: The user is presented with questions like:
+    *   *"Why was `useEffect` used in line 42?"*
+    *   *"What is the time complexity of the sorting function found in `utils.js`?"*
+    *   *"What happens if the API returns a 500 error in your `fetchData` function?"*
+4.  **Scoring**: The app grades the answers in real-time and issues a Pass/Fail status.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+This project uses **Next.js** as a full-stack framework (Frontend + API Routes).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+*   **Framework:** [Next.js 14+](https://nextjs.org/) (App Router)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **AI Engine:** [OpenAI API](https://openai.com/) (GPT-4.1-nano)
+*   **Language:** TypeScript / JavaScript
+*   **State Management:** React Hooks / Context API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+##  Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+*   Node.js (v18 or higher)
+*   npm or pnpm
+*   An OpenAI API Key
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/1337-pool/web-jam02.git
+    cd web-jam02
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    # or
+    pnpm install
+    ```
+
+3.  **Configure Environment Variables**
+    Create a `.env.local` file in the root directory and add your OpenAI key:
+    ```bash
+    OPENAI_API_KEY=sk-your-openai-api-key-here
+    # Add any other config variables here
+    ```
+
+4.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+
+5.  **Open the app**
+    Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
